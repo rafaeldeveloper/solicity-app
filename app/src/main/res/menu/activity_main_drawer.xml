@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@android:drawable/ic_partial_secure"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Histórico" />
+        <item
+            android:id="@+id/nav_solicite_service"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Solicitar Serviço" />
+        <item
+            android:id="@+id/menu_settings"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Configurações" />
+    </group>
+
+    <item android:title="MAIS OPÇÕES">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Seja um prestador de serviços" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="Ajuda" />
+        </menu>
+    </item>
+
+</menu>

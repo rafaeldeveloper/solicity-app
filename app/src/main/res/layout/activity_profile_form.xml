@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/pad_16dp"
+        android:layout_marginEnd="@dimen/pad_16dp"
+        android:textSize="@dimen/txt_16sp"
+        android:layout_marginTop="@dimen/pad_8dp"
+        android:paddingTop="@dimen/pad_16dp"
+        android:paddingBottom="@dimen/pad_16dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_foto"
+            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/perfil" />
+
+        <Button
+            android:id="@+id/profile_btn_foto"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="false"
+            android:layout_marginLeft="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/fundo_camera" />
+
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_first_name"
+            android:id="@+id/textView2" />
+
+        <EditText
+            android:id="@+id/profile_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:hint="@string/profile_first_name"
+            android:inputType="textPersonName|textCapWords"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_last_name"
+            android:id="@+id/textView"
+            android:layout_marginRight="44dp"
+            android:layout_marginEnd="44dp" />
+
+        <EditText
+            android:id="@+id/profile_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:hint="@string/profile_last_name"
+            android:inputType="textPersonName|textCapWords"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:id="@+id/profile_email"/>
+
+        <TextView
+            android:text="Site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:imeOptions="actionNext"
+            android:id="@+id/profile_site"/>
+    </LinearLayout>
+
+</LinearLayout>
