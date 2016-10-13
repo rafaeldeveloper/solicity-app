@@ -8,12 +8,14 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private Long id;
+    private String cpf;
     private String lastName;
     private String firstName;
     private String email;
     private String phone;
     private String site;
     private String urlImage;
+    private String createdAt;
 
     public User() {}
 
@@ -88,5 +90,21 @@ public class User implements Serializable {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

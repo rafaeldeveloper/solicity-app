@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.gleilson.soliceservices.MainActivity;
@@ -12,40 +11,32 @@ import com.example.gleilson.soliceservices.Server;
 import com.example.gleilson.soliceservices.SharedPreferencesUser;
 import com.example.gleilson.soliceservices.WebClient;
 import com.example.gleilson.soliceservices.converter.LoginConverter;
-import com.example.gleilson.soliceservices.converter.ProfileConverter;
 import com.example.gleilson.soliceservices.dao.ProfileDAO;
 import com.example.gleilson.soliceservices.model.Profile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginTask extends AsyncTask<Void, Void, JSONObject> {
+public class ListCategoriesTask extends AsyncTask<Void, Void, JSONObject> {
 
     private Context context;
     private ProgressDialog dialog;
-    private String email;
-    private String password;
 
-    public LoginTask(Context context, String email, String password) {
+    public ListCategoriesTask(Context context) {
         this.context = context;
-        this.email = email;
-        this.password = password;
     }
 
     @Override
     protected void onPreExecute() {
-        dialog = ProgressDialog.show(context, "Aguarde", "Verficando usuário...", true, true);
+        dialog = ProgressDialog.show(context, "Aguarde", "Carregando categorias...", true, true);
     }
 
     @Override
     protected JSONObject doInBackground(Void... params) {
-        LoginConverter conversor = new LoginConverter();
-        String json = conversor.post(this.email, this.password);
-
         try {
-            WebClient client = new WebClient(Server.API_URL_LOGIN);
-            return client.post(json);
+            WebClient client = new WebClient(Server.API_URL_CATEGORIES);
 
+            return client.get();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -72,8 +63,6 @@ public class LoginTask extends AsyncTask<Void, Void, JSONObject> {
 
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra("profile", profile);
-
-                Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_LONG).show();
 
                 context.startActivity(intent);
             } else {

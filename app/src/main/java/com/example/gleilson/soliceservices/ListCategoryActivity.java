@@ -31,6 +31,8 @@ public class ListCategoryActivity extends AppCompatActivity {
 
         categories = new ArrayList<Category>();
 
+        new ListCategoryActivity();
+
         String url = "http://lorempixel.com/400/200/sports";
 
         categories.add(new Category("Eletricista", url + "/1/", 10));

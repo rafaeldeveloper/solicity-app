@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gleilson.soliceservices.dao.ProfileDAO;
+import com.example.gleilson.soliceservices.tasks.CreateAccountTask;
+import com.example.gleilson.soliceservices.tasks.LoginTask;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -27,7 +29,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-    ProfileDAO dao = new ProfileDAO(this);
+        ProfileDAO dao = new ProfileDAO(this);
         dao.get("asdasdas");
 
         btnForgotPassword = (TextView) findViewById(R.id.activity_sign_in_action_forgot_password);
@@ -50,7 +52,7 @@ public class SignInActivity extends AppCompatActivity {
                 String password = edtPassword.getText().toString();
                 String email = edtEmail.getText().toString();
 
-
+                new LoginTask(SignInActivity.this, email, password).execute();
             }
         });
 

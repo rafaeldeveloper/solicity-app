@@ -14,22 +14,41 @@ import android.widget.Toast;
 import com.example.gleilson.soliceservices.model.Profile;
 import com.example.gleilson.soliceservices.tasks.CreateAccountTask;
 
-import com.*;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
-public class SignUpActivity extends AppCompatActivity {
+import java.util.List;
 
+public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
+
+    @NotEmpty
     private EditText edtFirstName;
+
     private EditText edtLastName;
+
+    @Email
     private EditText edtEmail;
+
+    @NotEmpty
     private EditText edtPhone;
+
+    @NotEmpty
     private EditText edtPassword;
     private Button btnCreateAccount;
     private ProgressDialog diolog;
+    private Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+
 
         edtFirstName = (EditText) findViewById(R.id.activity_sign_up_edt_first_name);
         edtLastName = (EditText) findViewById(R.id.activity_sign_up_edt_last_name);
@@ -42,7 +61,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                boolean valid = validForm();
+                validator.validate();
+
+                boolean valid = true; //
 
                 if (valid) {
                     Profile profile = new Profile();
@@ -77,5 +98,25 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

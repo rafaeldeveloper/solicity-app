@@ -23,6 +23,40 @@ public class WebClient {
         this.url = url;
     }
 
+    public JSONObject get() throws JSONException {
+
+        String jsonResponse = "";
+
+        try {
+            OkHttpClient client = new OkHttpClient();
+
+            Request.Builder builder = new Request.Builder();
+            builder.url(this.url);
+            builder.get();
+
+            Request request = builder.build();
+
+            Response response = client.newCall(request).execute();
+
+            jsonResponse = response.body().string();
+
+            Log.d("CATEGORIES", jsonResponse);
+
+        } catch (MalformedURLException e) {
+            Log.d("MalformedURLException", e.getMessage());
+            e.printStackTrace();
+
+            jsonResponse = "{success: false, msg: " + e.getMessage() + "}";
+        } catch (IOException e) {
+            Log.d("IOException", e.getMessage());
+            e.printStackTrace();
+
+            jsonResponse = "{success: false, msg: " + e.getMessage() + "}";
+        }
+
+        return new JSONObject(jsonResponse);
+    }
+
     public JSONObject post(String json) throws JSONException {
 
         String jsonResponse = "";
