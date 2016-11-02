@@ -9,29 +9,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gleilson.soliceservices.R;
+import com.example.gleilson.soliceservices.model.Professional;
 import com.example.gleilson.soliceservices.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class UsersAdapter extends BaseAdapter {
+public class ProfessionalsAdapter extends BaseAdapter {
 
     Context ctx;
-    List<User> users;
+    List<Professional> professionals;
 
-    public UsersAdapter(Context ctx, List<User> users) {
-        this.users = users;
+    public ProfessionalsAdapter(Context ctx, List<Professional> professionals) {
+        this.professionals = professionals;
         this.ctx = ctx;
     }
 
     @Override
     public int getCount() {
-        return users.size();
+        return professionals.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return users.get(position);
+        return professionals.get(position);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class UsersAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        User user = users.get(position);
+        Professional professional = professionals.get(position);
 
         ViewHolder holder = null;
         if (convertView == null) {
@@ -61,14 +62,14 @@ public class UsersAdapter extends BaseAdapter {
         }
 
         Picasso.with(ctx)
-                .load(user.getUrlImage())
+                .load(professional.getUrlImage())
                 .placeholder(R.drawable.perfil)
                 .into(holder.imgProfessionals);
 
-        holder.txtName.setText(user.getFirstName() +  " " + user.getLastName());
-        holder.txtEmail.setText(String.valueOf(user.getEmail()));
+        holder.txtName.setText(professional.getFirstName() +  " " + professional.getLastName());
+        holder.txtEmail.setText(String.valueOf(professional.getEmail()));
 
-        String phone = (user.getPhone() == null) ? "Sem telefone" : user.getPhone();
+        String phone = (professional.getPhone() == null) ? "Sem telefone" : professional.getPhone();
         holder.txtPhone.setText(phone);
 
         return convertView;

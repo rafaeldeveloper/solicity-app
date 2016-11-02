@@ -1,12 +1,26 @@
 package com.example.gleilson.soliceservices;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.gleilson.soliceservices.dao.ProfileDAO;
 import com.example.gleilson.soliceservices.model.Profile;
+import com.example.gleilson.soliceservices.tasks.ListCategoriesTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,6 +47,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        new Thread(new Runnable() {
+            public void run() {
+                Sync sync = new Sync();
+                sync.onTokenRefresh();
+            }
+        }).start();
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +94,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView;
+        MenuItem item = menu.findItem(R.id.action_searchable_activity);
+
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ){
+            searchView = (SearchView) item.getActionView();
+        }
+        else{
+            searchView = (SearchView) MenuItemCompat.getActionView( item );
+        }
+
+        searchView.setSearchableInfo( searchManager.getSearchableInfo( getComponentName() ) );
+        searchView.setQueryHint( getResources().getString(R.string.search_hint) );
+
         return true;
     }
 
@@ -145,8 +184,8 @@ public class MainActivity extends AppCompatActivity
         if (urlImage != null) {
 //            Bitmap bitmap = BitmapFactory.decodeFile(urlImage);
 //            Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-
-//            image.setBackground(urlImage);
+//
+//            image.setImageBitmap(bitmapReduzido);
 //            image.setTag(urlImage);
         }
     }

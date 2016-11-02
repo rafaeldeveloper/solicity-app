@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,11 +25,18 @@ public class ProfileFormActivity extends AppCompatActivity {
     private FormProfileHelper helper;
     public static final int CODIGO_CAMERA = 567;
     private String caminhoFoto;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_form);
+
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar .setTitle("Editar perfil");
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         helper = new FormProfileHelper(this);
 
@@ -63,6 +71,10 @@ public class ProfileFormActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
             case R.id.menu_formulario_ok:
 
                 Profile user = helper.getUser();
@@ -75,8 +87,6 @@ public class ProfileFormActivity extends AppCompatActivity {
                 } else {
                     dao.insert(user);
                 }
-
-                dao.close();
 
                 finish();
                 break;

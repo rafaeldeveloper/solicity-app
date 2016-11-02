@@ -3,6 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_searchable_activity">Buscar categorias</string>
 
     <string name="msg_error_field_required">Campo obrigatório</string>
     <string name="msg_error_email_invalid">Email inválido</string>
@@ -45,6 +46,11 @@
 
     <string name="texto_cabecalho">Categorias</string>
     <string name="nenhum_carro">Nenhuma categoria cadastrada</string>
+    <string name="app_label">Solicite Service</string>
+    <string name="search_hint">Pesquisar categorias</string>
+    <string name="title_activity_transition">Transição</string>
+    <string name="action_second_activity">Segundo menu</string>
+    <string name="action_transition_activity">Transição</string>
 
     <plurals name="texto_rodape">
         <item quantity="one">1 categoria</item>

@@ -5,15 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/category_image"
-        android:layout_width="72dp"
-        android:layout_height="72dp" />
+        android:layout_marginTop="10dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/perfil" />
 
     <TextView
         android:text="@null"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/pad_10dp"
         android:id="@+id/category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

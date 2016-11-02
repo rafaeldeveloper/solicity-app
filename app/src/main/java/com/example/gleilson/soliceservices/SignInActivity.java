@@ -52,7 +52,11 @@ public class SignInActivity extends AppCompatActivity {
                 String password = edtPassword.getText().toString();
                 String email = edtEmail.getText().toString();
 
-                new LoginTask(SignInActivity.this, email, password).execute();
+                if (!Internet.isConnected(SignInActivity.this)) {
+                    Toast.makeText(SignInActivity.this, "Verifique sua conexão", Toast.LENGTH_LONG).show();
+                } else {
+                    new LoginTask(SignInActivity.this, email, password).execute();
+                }
             }
         });
 

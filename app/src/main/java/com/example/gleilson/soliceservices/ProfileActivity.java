@@ -3,6 +3,8 @@ package com.example.gleilson.soliceservices;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +28,12 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar .setTitle("Perfil");
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -40,6 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+
+                break;
+
             case R.id.menu_formulario_ok:
 
                 Intent intent = new Intent(ProfileActivity.this, ProfileFormActivity.class);
@@ -48,7 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -75,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         txtEmail.setText(profile.getEmail());
         txtName.setText(profile.getFirstName() + " " + profile.getLastName());
+
         txtPhone.setText(profile.getPhone() != null ? profile.getPhone() : "Nenhum telefone cadastrado");
         txtSite.setText(profile.getSite() != null ? profile.getSite() : "Nenhum site cadastrado");
 
@@ -87,5 +100,4 @@ public class ProfileActivity extends AppCompatActivity {
 //            image.setTag(urlImage);
         }
     }
-
 }

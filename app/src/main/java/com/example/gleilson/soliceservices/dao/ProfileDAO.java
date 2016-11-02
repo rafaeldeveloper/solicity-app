@@ -18,47 +18,18 @@ import java.util.List;
 /**
  * Created by gleilson on 15/09/16.
  */
-public class ProfileDAO extends SQLiteOpenHelper {
+public class ProfileDAO extends BaseDAO {
+
+    final private String TABLE_NAME = "profile";
 
     public ProfileDAO(Context context) {
-        super(context, "solicite_service", null, 1);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE profile (" +
-                         "   id INTEGER PRIMARY KEY " +
-                         " , email TEXT NOT NULL " +
-                         " , firstname TEXT NOT NULL " +
-                         " , lastname TEXT NOT NULL " +
-                         " , url_image TEXT " +
-                         " , site TEXT " +
-                         " , phone TEXT " +
-                         " , token TEXT " +
-                      ");";
-
-        db.execSQL(sql);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int i1) {
-//        String sql = "";
-//        switch (oldVersion) {
-//            case 1:
-//                sql = "ALTER TABLE users ADD COLUMN path_image TEXT";
-//                db.execSQL(sql);
-//
-//                sql = "ALTER TABLE users ADD COLUMN site TEXT";
-//                db.execSQL(sql);
-//        }
+        super(context);
     }
 
     public void insert(Profile profile) {
-        SQLiteDatabase db = getWritableDatabase();
-
         ContentValues values = getContentValues(profile);
 
-        db.insert("profile", null, values);
+        db.getWritableDatabase().insert(TABLE_NAME, null, values);
     }
 
     @NonNull
@@ -81,10 +52,7 @@ public class ProfileDAO extends SQLiteOpenHelper {
 //
 //
  Log.d("MAISUMTESTE", sql);;
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         Profile profile = new Profile();
 
@@ -110,11 +78,9 @@ public class ProfileDAO extends SQLiteOpenHelper {
     }
 
     public List<Profile> listUsers() {
-        String sql = "SELECT * FROM profile";
+        String sql = "SELECT * FROM " + TABLE_NAME;
 
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         List<Profile> users = new ArrayList<Profile>();
 
@@ -137,19 +103,16 @@ public class ProfileDAO extends SQLiteOpenHelper {
     }
 
     public void delete(Profile user) {
-        SQLiteDatabase db = getWritableDatabase();
-
         String [] params = {user.getId().toString()};
-        db.delete("profile", "id = ?", params);
+        db.getWritableDatabase().delete(TABLE_NAME, "id = ?", params);
     }
 
     public void update(Profile profile) {
-        SQLiteDatabase db = getWritableDatabase();
-
         ContentValues values = getContentValues(profile);
 
         String[] params = { profile.getId().toString() };
+        db.getWritableDatabase().update(TABLE_NAME, values, "id = ?", params);
 
-        db.update("profile", values, "id = ?", params);
+        db.close();
     }
 }

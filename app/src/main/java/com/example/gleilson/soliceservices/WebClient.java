@@ -2,6 +2,7 @@ package com.example.gleilson.soliceservices;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +31,8 @@ public class WebClient {
         try {
             OkHttpClient client = new OkHttpClient();
 
+            Log.d("RESPONSE this.url", this.url);
+
             Request.Builder builder = new Request.Builder();
             builder.url(this.url);
             builder.get();
@@ -40,7 +43,7 @@ public class WebClient {
 
             jsonResponse = response.body().string();
 
-            Log.d("CATEGORIES", jsonResponse);
+            Log.d("RESPONSE GET", jsonResponse);
 
         } catch (MalformedURLException e) {
             Log.d("MalformedURLException", e.getMessage());

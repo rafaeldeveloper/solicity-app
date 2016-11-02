@@ -13,4 +13,5 @@ public class Server {
 
     public static final String API_URL_CATEGORIES = API_URL + "categories";
 
+    public static final String API_URL_SYNC = API_URL + "sync";
 }

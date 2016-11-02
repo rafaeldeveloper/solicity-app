@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -14,39 +16,40 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gleilson.soliceservices.adapter.CategoriesAdapter;
-import com.example.gleilson.soliceservices.adapter.UsersAdapter;
+import com.example.gleilson.soliceservices.adapter.ProfessionalsAdapter;
+import com.example.gleilson.soliceservices.dao.ProfessionalDAO;
 import com.example.gleilson.soliceservices.model.Category;
+import com.example.gleilson.soliceservices.model.Professional;
+import com.example.gleilson.soliceservices.model.Profile;
 import com.example.gleilson.soliceservices.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListProfessionalsActivity extends AppCompatActivity {
 
     private ListView listView;
+    private List<Professional> professionals;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_category);
 
-        final List<User> users;
-        UsersAdapter adapter;
+        final Category category = (Category) getIntent().getSerializableExtra("category");
 
-        users = new ArrayList<User>();
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar .setTitle(category.getName() + " - Profissionais");
+        setSupportActionBar(toolbar);
 
-        String url = "http://lorempixel.com/200/200";
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        users.add(new User("Ferreira", "Gleilson", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
-        users.add(new User("Gleilson", "Ferreira", "fgleilsonf@gmail.com", url));
+        ProfessionalDAO dao = new ProfessionalDAO(this);
+        professionals = dao.list();
 
-        adapter = new UsersAdapter(this, users);
+        ProfessionalsAdapter adapter;
+
+        adapter = new ProfessionalsAdapter(this, professionals);
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -75,10 +78,13 @@ public class ListProfessionalsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                User user = (User) adapterView.getItemAtPosition(i);
+                Professional professional = (Professional) adapterView.getItemAtPosition(i);
 
-                if (user != null) {
-                    Toast.makeText(ListProfessionalsActivity.this, user.getFirstName() + " " + user.getLastName(), Toast.LENGTH_SHORT).show();
+                if (professional != null) {
+                    Intent intent = new Intent(ListProfessionalsActivity.this, ProfessionalActivity.class);
+                    intent.putExtra("category", category);
+                    intent.putExtra("professional", professional);
+                    startActivity(intent);
                 }
             }
         });
@@ -113,5 +119,15 @@ public class ListProfessionalsActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
